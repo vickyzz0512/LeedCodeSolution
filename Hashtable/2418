@@ -1,0 +1,41 @@
+class Solution {
+    public String[] sortPeople(String[] names, int[] heights) {
+
+        Map<Integer, String> person = new HashMap<>();
+        for (int i = 0; i < names.length; i++) {
+            person.put (heights[i], names[i]);
+        }
+        
+        //solution 1:
+        Arrays.sort(heights);
+
+        String[] result = new String[heights.length];
+        int index = 0;
+        for (int i = heights.length - 1; i >= 0; i--) {
+            result[index] = person.get(heights[i]);
+            index++;
+        }
+        return result;
+
+
+        // solution 2:
+        String[] result = new String[names.length];
+
+        for (int i = 0; i < names.length; i++) {
+            int tallest = 0;
+            int tallestIndex = 0;
+
+            for (int j = 0; j < heights.length; j++) {
+                if (heights[j] > tallest) {
+                    tallest = heights[j];
+                    tallestIndex = j;
+                }
+            }
+
+            result[i] = person.get(tallest);
+            heights[tallestIndex] = -1; 
+        }
+        return result;
+    
+    }
+}
