@@ -1,0 +1,30 @@
+/*
+// Definition for Employee.
+class Employee {
+    public int id;
+    public int importance;
+    public List<Integer> subordinates;
+};
+*/
+
+class Solution {
+    public int getImportance(List<Employee> employees, int id) {
+        // to create hashmap to store the id as key and employees as value
+        HashMap <Integer, Employee> map = new HashMap<>();
+        for (Employee e: employees) {
+            map.put(e.id, e);
+        }
+        return dfs(map, id);
+   
+    }
+
+    // builder a helper function
+    private int dfs (Map<Integer, Employee> map, int id) {
+        Employee target = map.get(id);
+        int total = target.importance;
+        for (int subId: target.subordinates) {
+            total += dfs(map, subId);
+        }
+        return total;
+    }
+}
