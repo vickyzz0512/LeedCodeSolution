@@ -1,0 +1,38 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicatesUnsorted(ListNode head) {
+
+        HashMap<Integer, Integer> freq = new HashMap<>();
+
+        ListNode curr = head;
+        while (curr != null) {
+            // to count frequency of each value
+            freq.put(curr.val, freq.getOrDefault(curr.val, 0) + 1);
+            curr = curr.next;
+        }
+        
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        curr = dummy;
+
+        while (curr.next != null) {
+            if (freq.get(curr.next.val) > 1) {
+                curr.next = curr.next.next;
+            } else {
+                curr = curr.next;
+            }
+        }
+
+        return dummy.next;
+    }
+
+}
